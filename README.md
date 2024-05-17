@@ -27,3 +27,9 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## 参数修改
+
+1. 修改 `/src/utils/api.js` 中 baseURL
+2. 修改 `/src/view/Login.vue` 中 clientId 和 authUrl
+3. 修改 `/src/view/Callback.vue`中 clientId 和 clientSecret
