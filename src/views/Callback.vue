@@ -38,7 +38,15 @@
             'Authorization': `Basic ${base64Credentials}`
         }
       });
-      this.token = 'logged in ' + response.data.access_token;
+
+      let access_token = response.data.access_token;
+      this.token = 'logged in ' + access_token;
+
+      // 将信息发送回父窗口
+    if (window.opener) {
+      window.opener.postMessage({ access_token}, 'http://localhost:5173');
+      window.close();
+    }
         console.log('Login successful: ', response.data);
       } catch (error) {
         console.error('Login failed: ', error);

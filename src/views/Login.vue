@@ -28,7 +28,25 @@
         const top = (screen.height/2 - 350)
 
         window.open(authUrl, 'oauth window','location=no,menubar=yes, directories=yes, location=no, titlebar=yes, toolbar=yes, resizable=yes, width=800, height=700, top='+top+', left='+left)
+
+        window.addEventListener('message', this.handleAuthMessage, false);
+      },
+
+      handleAuthMessage(event) {
+      if (event.origin !== 'http://localhost:5173') {
+        return;
       }
+      
+      const { access_token } = event.data;
+
+      if (access_token) {
+        // 获取授权码
+        console.log('access_token:', access_token);
+        // 接下来，你可以用这个授权码去请求access_token
+      }
+      // 移除事件监听器
+      window.removeEventListener('message', this.handleAuthMessage, false);
+    }
     }
   };
   </script>
