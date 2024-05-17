@@ -22,7 +22,12 @@
         localStorage.setItem('code_verifier', codeVerifier);
   
         const authUrl = `http://yourdomain/sign/authz/oauth/v20/authorize?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
-        window.location.href = authUrl;
+
+
+        const left = (screen.width/2 - 400)
+        const top = (screen.height/2 - 350)
+
+        window.open(authUrl, 'oauth window','location=no,menubar=yes, directories=yes, location=no, titlebar=yes, toolbar=yes, resizable=yes, width=800, height=700, top='+top+', left='+left)
       }
     }
   };
