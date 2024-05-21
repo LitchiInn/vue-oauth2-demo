@@ -1,14 +1,30 @@
 <!-- src/views/Login.vue -->
 <template>
     <div>
-      <button @click="login">Login with OAuth</button>
+      <n-space>
+        <n-button @click="login" strong secondary round type="success">Login with OAuth</n-button>
+        <n-button @click="logout" strong secondary round type="success">Logout with OAuth</n-button>
+      </n-space>
     </div>
   </template>
   
   <script>
   import { generateCodeVerifier, generateCodeChallenge } from '@/utils/pkce';
-  
+  import api from '@/utils/api';
+  import { toast } from 'vue3-toastify';
+  import 'vue3-toastify/dist/index.css';
+  import { NButton, NSpace } from 'naive-ui'
+
   export default {
+    components: {
+      NButton, NSpace
+    },
+    name: "TokenComponent",
+    data() {
+        return {
+            token: null
+        };
+    },
     methods: {
       async login() {
         const codeVerifier = generateCodeVerifier();
@@ -38,14 +54,35 @@
       }
       
       const { access_token } = event.data;
+      this.token = access_token;
 
       if (access_token) {
         // 获取授权码
         console.log('access_token:', access_token);
+        toast("登录成功，token为" + access_token, {
+        autoClose: 3000,
+      });
         // 接下来，你可以用这个授权码去请求access_token
       }
       // 移除事件监听器
       window.removeEventListener('message', this.handleAuthMessage, false);
+    },
+    async logout() {
+      if (this.token) {
+
+        const response = await api.get('/sign/authz/oauth/v20/logout',{},
+        {
+        headers: {
+            'Authorization': 'Bearer ' + this.token
+        }
+      }).then(
+        toast("登出成功", {
+        autoClose: 3000,
+      })
+      ).catch(error => {
+        console.log(error)
+      })
+      }
     }
     }
   };
