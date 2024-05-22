@@ -35,7 +35,8 @@
         },
         {
         headers: {
-            'Authorization': `Basic ${base64Credentials}`
+            'Authorization': `Basic ${base64Credentials}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
       });
 
