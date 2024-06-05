@@ -70,8 +70,7 @@
     async logout() {
       if (this.token) {
 
-        const response = await api.get('/sign/authz/oauth/v20/logout',{},
-        {
+        await api.get('/sign/authz/oauth/v20/logout',{
         headers: {
             'Authorization': 'Bearer ' + this.token
         }
@@ -82,6 +81,10 @@
       ).catch(error => {
         console.log(error)
       })
+      
+      
+      let redirect_uri = encodeURIComponent('http://localhost:5173')
+      let logout = `http://sso.litchinn.com/sign/force/logout?redirect_uri=${redirect_uri}`
       }
     }
     }
