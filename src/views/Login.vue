@@ -81,11 +81,6 @@
       ).catch(error => {
         console.log(error)
       })
-      
-      
-      let redirect_uri = encodeURIComponent('http://localhost:5173')
-      let logout = `http://sso.litchinn.com/sign/force/logout?redirect_uri=${redirect_uri}`
-      window.location.href = logout
       }
     }
     }
